@@ -8,8 +8,12 @@ endpoints.post("/usuario", async (req,resp) => {
     try {
         const novoUsuario = req.body;
         console.log('Novo usuário recebido:', novoUsuario); 
-    
-        let id
+
+            if (!novoUsuario.nome || novoUsuario.nome == null) return resp.status(400).send({ erro: "Preencha o campo nome." });
+            if(!novoUsuario.email || novoUsuario.email == null)return resp.status(404).send({erro:"Preencha o campo email."}) 
+            if(!novoUsuario.senha || novoUsuario == null)return resp.status(404).send({erro:"Preencha o campo senha"})
+
+            let id
         if (novoUsuario.email === "adm@gmail.com" && novoUsuario.senha === "adm") {
           id = await inserirAdmin(novoUsuario);
           resp.send({ mensagem: "Administrador cadastrado com sucesso", NovoID: id });
@@ -28,6 +32,9 @@ endpoints.post("/usuario", async (req,resp) => {
 endpoints.post('/logar', async (req, resp) => {
     try {
       const { email, senha } = req.body;
+
+      if(!email || email==null)return resp.status(404).send({erro:"Preencha o campo email."})
+      if(!senha || senha == null)return resp.status(404).send({erro:"Preencha o campo senha."})  
   
       let registros = await VerificarAdmin(email, senha);
       if (registros) {

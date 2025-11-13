@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './auth.scss';
-import Login from '../components/Login';
+import Login from '../components/login';
 import Registrar from '../components/Registrar';
 import api from '../api';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 
 export default function AuthContainer() {
@@ -15,10 +16,10 @@ export default function AuthContainer() {
   async function uRegistrar(dados) {
     try {
       const response = await api.post('/usuario', dados);
-      alert('Usuário cadastrado com sucesso! ID: ' + response.data.NovoID);
+      toast('Usuário cadastrado com sucesso! ID: ' + response.data.NovoID);
       setModo('login'); 
     } catch (err) {
-      alert('Erro ao registrar: ' + err.response?.data?.erro || err.message);
+      toast('Erro ao registrar: ' + err.response?.data?.erro || err.message);
     }
   }
 
@@ -26,7 +27,7 @@ export default function AuthContainer() {
     try {
       const response = await api.post('/logar', dados);
       localStorage.setItem('token', response.data.token);
-      alert('Login bem-sucedido!');
+      toast('Login bem-sucedido!');
 
       if (response.data.tipo === 'adm') {
         navigate('/adm');
@@ -35,7 +36,7 @@ export default function AuthContainer() {
       }
 
     } catch (err) {
-      alert('Erro no login: ' + err.response?.data?.erro || err.message);
+      toast('Erro no login: ' + err.response?.data?.erro || err.message);
     }
   }
 

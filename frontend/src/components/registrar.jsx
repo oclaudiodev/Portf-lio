@@ -11,6 +11,7 @@ export default function Registrar({ onSubmit }) {
     onSubmit({ nome, email, senha }); 
   }
 
+
   return (
     <div className="auth-form container-registrar">
       <h1>Registre-se</h1>
