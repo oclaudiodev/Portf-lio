@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import './inicio.scss'
+import { toast } from 'react-toastify';
 
 
 
@@ -10,10 +11,10 @@ export default function Inicio() {
     async function uSair() {
         try {
             localStorage.removeItem('token');
-            alert('Você saiu da conta.');
+            toast('Você saiu da conta.');
             navegar('/');
         } catch (err) {
-            alert('Erro ao sair: ' + err.message);
+            toast('Erro ao sair: ' + err.message);
         }
     }
 
